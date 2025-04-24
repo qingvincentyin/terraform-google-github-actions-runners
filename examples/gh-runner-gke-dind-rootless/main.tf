@@ -15,19 +15,27 @@
  */
 
 module "runner-gke" {
-  source  = "terraform-google-modules/github-actions-runners/google//modules/gh-runner-gke"
-  version = "~> 4.0"
+  # source  = "terraform-google-modules/github-actions-runners/google//modules/gh-runner-gke"
+  # version = "~> 5.0"
+  source  = "../../modules/gh-runner-gke"
 
   project_id             = var.project_id
-  create_network         = true
-  network_name           = "runner-network-dind-r"
-  subnet_name            = "runner-subnet-dind-r"
+  region                 = var.region
+  ip_range_pods_name     = var.ip_range_pods_name
+  ip_range_services_name = var.ip_range_services_name
+  network_name           = var.network_name
+  subnet_name            = var.subnet_name
+  create_network         = var.create_network
+  subnetwork_project     = var.subnetwork_project
+  max_node_count         = var.max_node_count
+  min_node_count         = var.min_node_count
   cluster_suffix         = "dind-rootless"
-  gh_app_id              = "123456"
-  gh_app_installation_id = "12345678"
-  gh_app_private_key     = "sample"
-  gh_config_url          = "https://github.com/ORGANIZATION"
-  enable_private_nodes   = true
+  gh_app_id              = var.gh_app_id
+  gh_app_installation_id = var.gh_app_installation_id
+  gh_app_private_key     = var.gh_app_private_key
+  gh_config_url          = "https://github.com/${var.gh_org_id}"
+  enable_private_nodes   = var.enable_private_nodes
+  grant_registry_access  = var.grant_registry_access
 
   # pass values.yaml for dind-rootless runners configuratin
   arc_runners_values = [

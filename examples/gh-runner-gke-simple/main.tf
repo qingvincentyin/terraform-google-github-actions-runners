@@ -15,14 +15,15 @@
  */
 
 module "runner-gke" {
-  source  = "terraform-google-modules/github-actions-runners/google//modules/gh-runner-gke"
-  version = "~> 4.0"
+  # source  = "terraform-google-modules/github-actions-runners/google//modules/gh-runner-gke"
+  # version = "~> 5.0"
+  source  = "../../modules/gh-runner-gke"
 
   project_id             = var.project_id
   create_network         = true
   cluster_suffix         = "k8s"
-  gh_app_id              = "123456"
-  gh_app_installation_id = "12345678"
-  gh_app_private_key     = "sample"
-  gh_config_url          = "https://github.com/ORGANIZATION"
+  gh_app_id              = var.gh_app_id
+  gh_app_installation_id = var.gh_app_installation_id
+  gh_app_private_key     = var.gh_app_private_key
+  gh_config_url          = "https://github.com/${var.gh_org_id}"
 }

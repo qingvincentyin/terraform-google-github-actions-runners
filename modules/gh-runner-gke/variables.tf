@@ -157,13 +157,15 @@ variable "gh_config_url" {
 variable "arc_runners_version" {
   type        = string
   description = "Version tag for the ARC image. See [https://github.com/actions/actions-runner-controller/pkgs/container/actions-runner-controller-charts%2Fgha-runner-scale-set](https://github.com/actions/actions-runner-controller/pkgs/container/actions-runner-controller-charts%2Fgha-runner-scale-set) for releases."
-  default     = "0.9.3"
+  # default     = "0.9.3"
+  default     = "0.11.0"
 }
 
 variable "arc_controller_version" {
   type        = string
   description = "Version tag for the ARC image. See [https://github.com/actions/actions-runner-controller/pkgs/container/actions-runner-controller-charts%2Fgha-runner-scale-set-controller](https://github.com/actions/actions-runner-controller/pkgs/container/actions-runner-controller-charts%2Fgha-runner-scale-set-controller) for releases."
-  default     = "0.9.3"
+  # default     = "0.9.3"
+  default     = "0.11.0"
 }
 
 variable "arc_container_mode" {
@@ -187,5 +189,11 @@ variable "arc_runners_values" {
 variable "enable_private_nodes" {
   type        = bool
   description = "Whether nodes have internal IP addresses only."
+  default     = false
+}
+
+variable "grant_registry_access" {
+  type        = bool
+  description = "Grants created cluster-specific service account storage.objectViewer and artifactregistry.reader roles."
   default     = false
 }

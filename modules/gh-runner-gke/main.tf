@@ -51,9 +51,11 @@ resource "google_compute_subnetwork" "gh-subnetwork" {
  *****************************************/
 module "runner-cluster" {
   source                   = "terraform-google-modules/kubernetes-engine/google//modules/beta-public-cluster/"
-  version                  = "~> 35.0"
+  # version                  = "~> 35.0"
+  version                  = "~> 36.3"
   project_id               = var.project_id
   name                     = "gh-runner-${var.cluster_suffix}"
+  enterprise_config        = "ENTERPRISE"
   regional                 = false
   region                   = var.region
   zones                    = var.zones
@@ -68,6 +70,7 @@ module "runner-cluster" {
   service_account          = local.service_account
   gce_pd_csi_driver        = true
   deletion_protection      = false
+  grant_registry_access    = var.grant_registry_access
   node_pools = [
     {
       name                 = "runner-pool"
@@ -122,7 +125,7 @@ resource "helm_release" "arc" {
 }
 
 resource "helm_release" "arc_runners_set" {
-  name      = "arc-runners"
+  name      = "my-arc-runners"
   namespace = kubernetes_namespace.arc_runners.metadata[0].name
   chart     = "oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set"
   version   = var.arc_runners_version

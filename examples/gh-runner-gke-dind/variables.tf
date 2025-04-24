@@ -17,3 +17,19 @@ variable "project_id" {
   type        = string
   description = "The project id to deploy Github Runner MIG"
 }
+
+variable "gh_app_id" {
+  type        = string
+}
+
+variable "gh_app_installation_id" {
+  type        = string
+}
+
+variable "gh_app_private_key" {
+  type        = string
+}
+
+variable "gh_org_id" {
+  type        = string
+}
